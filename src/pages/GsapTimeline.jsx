@@ -1,5 +1,42 @@
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+
 const GsapTimeline = () => {
 	// TODO: Implement the gsap timeline
+
+	const timeLine = gsap.timeline({
+		repeat: -1,
+		repeatDelay: 1,
+		yoyo: true,
+	});
+
+	useGSAP(() => {
+		//It is similar to gsap.to and gsap.from but using this we can add animations in the middle of animations.
+
+		timeLine.to("#yellow-box", {
+			x: 250,
+			rotation: 360,
+			borderRadius: "100%",
+			duration: 2,
+			ease: "back.inOut",
+		});
+		timeLine.to("#yellow-box", {
+			y: 250,
+			scale: 2,
+			rotation: 360,
+			borderRadius: "100%",
+			duration: 2,
+			ease: "back.inOut",
+		});
+		timeLine.to("#yellow-box", {
+			x: 500,
+			scale: 1,
+			rotation: 360,
+			borderRadius: "8px",
+			duration: 2,
+			ease: "back.inOut",
+		});
+	}, []);
 
 	return (
 		<main>
@@ -37,7 +74,19 @@ const GsapTimeline = () => {
 			</p>
 
 			<div className="mt-20 space-y-10">
-				<button onClick={() => {}}>Play/Pause</button>
+				<button
+					onClick={() => {
+						if (
+							timeLine.paused() /** to get paused state of animation */
+						) {
+							timeLine.play();
+						} else {
+							timeLine.pause(); //to pause the animation
+						}
+					}}
+				>
+					Play/Pause
+				</button>
 
 				<div
 					id="yellow-box"
